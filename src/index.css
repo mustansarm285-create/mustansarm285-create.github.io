@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  /* palette */
+  --color-paper: #fafaf8;      /* warm white */
+  --color-pearl: #f2f3f4;      /* pearl white */
+  --color-paper-2: #e4e7eb;    /* light silver */
+  --color-sky: #dceaf5;        /* soft blue */
+  --color-steel: #91afc8;      /* muted steel blue (decorative) */
+  --color-ink: #17243a;        /* deep navy typography */
+  --color-ink-2: #303846;      /* soft charcoal */
+  --color-mute: #6a7382;
+  --color-line: rgba(23, 36, 58, 0.1);
+  /* accent for text/UI: a deeper tone of the steel blue so it stays readable on white */
+  --color-blue: #46698a;
+  --color-violet: #91afc8;
+  --color-night: #17243a;
+
+  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--color-ink); color: var(--color-paper); }
+  :focus-visible { outline: 2px solid var(--color-blue); outline-offset: 3px; border-radius: 6px; }
+}
+
+.skip-link {
+  position: fixed; left: 16px; top: -60px; z-index: 100;
+  background: #0b0d17; color: #f4f3ef; padding: 10px 16px; border-radius: 999px;
+  font: 500 14px var(--font-sans); transition: top .2s;
+}
+.skip-link:focus { top: 16px; }
+
+.grain::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.text-gradient {
+  background: linear-gradient(100deg, #17243a 0%, #46698a 60%, #7f9fbb 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 1px 0 rgba(255,255,255,.8) inset, 0 20px 50px -20px rgba(23, 36, 58, .14);
+}
+.glass-dark {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+}
+
+
+/* masked line reveal; side padding (offset by negative margin) so wide glyphs like M and R are never clipped */
+.split-line { display: block; overflow: hidden; padding: 0 .1em .06em; margin: 0 -.1em; }
+.split-line > span { display: inline-block; will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
+
+.text-gradient-light {
+  background: linear-gradient(100deg, #f2f3f4 0%, #dceaf5 50%, #91afc8 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* page entrance: short fade, never blocks content */
+.page-in { animation: page-in .3s ease-out both; }
+@keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .page-in { animation: none; } }
